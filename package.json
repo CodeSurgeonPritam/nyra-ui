@@ -1,0 +1,26 @@
+{
+  "name": "nyra-ui",
+  "version": "0.0.1",
+  "description": "Components for interfaces that feel alive. Coming soon at nyra.dev",
+  "keywords": [
+    "react",
+    "ui",
+    "components",
+    "tailwind",
+    "animations"
+  ],
+  "homepage": "https://nyra.dev",
+  "license": "MIT",
+  "author": "Pritam <pritamkunar13@gmail.com>",
+  "main": "index.js",
+  "files": [
+    "index.js"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/CodeSurgeonPritam/nyra-ui"
+  }
+}
