@@ -1,0 +1,96 @@
+export const metadata = {
+  title: "Theming",
+  description: "Override Nyra's design tokens, swap themes, and brand the whole library in one place.",
+};
+
+# Theming
+
+Nyra has **no theme provider**. Every component reads from a small set of CSS variables on `:root`. Change a variable, and every component on the page picks up the change immediately.
+
+## The token model
+
+There are two layers:
+
+1. **Raw palette** — concrete colors (`--ink`, `--bone`, `--lime`, `--rose`).
+2. **Semantic tokens** — what components actually consume (`--background`, `--foreground`, `--accent`, `--border`). These point at palette values.
+
+Theme switching only changes the semantic mapping. The palette stays constant.
+
+## The full token set
+
+```css
+:root {
+  /* Raw palette */
+  --ink: #0a0a0a;
+  --bone: #f5f3ee;
+  --muted: #6b6b66;
+  --lime: #c8ff3c;
+  --lime-soft: #e8ffa3;
+  --rose: #ff8466;
+  --border-dark: #1f1f1d;
+  --border-light: #e3dfd4;
+
+  /* Semantic tokens — dark by default */
+  --background: var(--ink);
+  --foreground: var(--bone);
+  --foreground-muted: var(--muted);
+  --accent: var(--lime);
+  --accent-soft: var(--lime-soft);
+  --accent-foreground: var(--ink);
+  --rose-accent: var(--rose);
+  --border: var(--border-dark);
+  --surface: #111110;
+}
+
+[data-theme="light"] {
+  --background: var(--bone);
+  --foreground: var(--ink);
+  --border: var(--border-light);
+  --surface: #ffffff;
+}
+```
+
+## Swapping the accent
+
+If lime isn't your brand, replace the `--accent` value and the entire library picks up the new color — buttons, focus rings, badges, code-block selections, OG images.
+
+```css
+:root {
+  --accent: #5b8def;        /* your brand */
+  --accent-foreground: #ffffff;
+}
+```
+
+<Callout type="tip" title="Pick a contrasting `--accent-foreground`">
+  Buttons and pills place `--accent-foreground` on top of `--accent`. With a
+  dark accent, set this to white; with a bright accent like Nyra's lime, keep
+  it dark. The rest of the library doesn't need to know.
+</Callout>
+
+## Theme switching
+
+Nyra ships with a tiny pre-paint script that reads `localStorage` (then `prefers-color-scheme`) and sets `data-theme` on `<html>` before first paint. You can lift the [ThemeToggle](/components) component verbatim and call it a day.
+
+```tsx
+import { ThemeToggle } from "@/components/site/theme-toggle";
+
+<header>
+  <ThemeToggle />
+</header>
+```
+
+## Tailwind v4 bridge
+
+Nyra is built on Tailwind v4 (CSS-first config). The semantic tokens are exposed to utility classes via `@theme inline`:
+
+```css
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-accent: var(--accent);
+  --color-border: var(--border);
+  --color-surface: var(--surface);
+}
+```
+
+This is what makes `bg-background`, `text-foreground`, and `border-border` resolve at runtime — and what makes theme switching cost zero JavaScript.

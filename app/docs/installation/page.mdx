@@ -1,0 +1,64 @@
+export const metadata = {
+  title: "Installation",
+  description: "Get a Next.js project ready for Nyra components.",
+};
+
+# Installation
+
+Nyra components are copy-paste. There's no `@nyra/ui` package to install — instead you bring the few primitives Nyra builds on, and drop component files into your own `components/ui/` directory.
+
+## 1. The base stack
+
+Nyra assumes a modern Next.js + Tailwind setup. If you already have one, skip this section.
+
+```bash
+pnpm create next-app@latest my-app --typescript --tailwind --app
+cd my-app
+```
+
+## 2. Required runtime dependencies
+
+Every Nyra component listed below uses `clsx` + `tailwind-merge` for class merging, and most animated components use `motion`.
+
+```bash
+pnpm add motion clsx tailwind-merge lucide-react
+```
+
+<Callout type="info" title="Per-component dependencies">
+  The component detail page lists exactly which packages each file needs.
+  Pages without animation often have **zero** extra dependencies — only the
+  shared `cn()` helper.
+</Callout>
+
+## 3. The `cn` helper
+
+Create `lib/utils.ts`:
+
+```tsx
+import { clsx, type ClassValue } from "clsx";
+import { twMerge } from "tailwind-merge";
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs));
+}
+```
+
+Every component imports `cn` from `@/lib/utils`. If you use a different path alias, do a project-wide find-and-replace once.
+
+## 4. Design tokens
+
+The components reference a small palette of CSS variables. Drop these into your global stylesheet — see [Theming](/docs/theming) for the full list and how light/dark mode is wired.
+
+## 5. Copy a component
+
+Visit the [catalog](/components), pick a component, and copy its file into `components/ui/<category>/<name>.tsx` in your project. Use it like any other React component:
+
+```tsx
+import { MagneticButton } from "@/components/ui/button/magnetic-button";
+
+export default function Page() {
+  return <MagneticButton>Hover me</MagneticButton>;
+}
+```
+
+That's it. You now own the source — edit it freely, or leave it alone for the next update.

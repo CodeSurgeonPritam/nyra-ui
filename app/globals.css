@@ -1,0 +1,147 @@
+@import "tailwindcss";
+
+/* ---------------------------------------------------------------------------
+   Nyra design tokens
+   -------------------------------------------------------------------------
+   The site is dark-by-default. `[data-theme="light"]` swaps the semantic
+   tokens. Raw palette values stay constant; only the semantic mappings
+   change between themes.
+--------------------------------------------------------------------------- */
+
+:root {
+  color-scheme: dark;
+
+  /* Raw palette ---------------------------------------------------------- */
+  --ink: #0a0a0a;
+  --bone: #f5f3ee;
+  --muted: #6b6b66;
+  --lime: #c8ff3c;
+  --lime-soft: #e8ffa3;
+  --rose: #ff8466;
+  --border-dark: #1f1f1d;
+  --border-light: #e3dfd4;
+
+  /* Semantic tokens (dark by default) ----------------------------------- */
+  --background: var(--ink);
+  --foreground: var(--bone);
+  --foreground-muted: var(--muted);
+  --accent: var(--lime);
+  --accent-soft: var(--lime-soft);
+  --accent-foreground: var(--ink);
+  --rose-accent: var(--rose);
+  --border: var(--border-dark);
+  --surface: #111110;
+
+  /* Radius scale --------------------------------------------------------- */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+}
+
+[data-theme="light"] {
+  color-scheme: light;
+  --background: var(--bone);
+  --foreground: var(--ink);
+  --foreground-muted: #6b6b66;
+  --accent: var(--lime);
+  --accent-soft: var(--lime-soft);
+  --accent-foreground: var(--ink);
+  --rose-accent: var(--rose);
+  --border: var(--border-light);
+  --surface: #ffffff;
+}
+
+/* ---------------------------------------------------------------------------
+   Tailwind v4 token bridge
+   -------------------------------------------------------------------------
+   `@theme inline` exposes our CSS vars to Tailwind utilities at runtime
+   (so `bg-background`, `text-foreground`, etc. react to theme switches).
+   The font-family vars are populated by next/font in app/layout.tsx.
+--------------------------------------------------------------------------- */
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-foreground-muted: var(--foreground-muted);
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-rose: var(--rose-accent);
+  --color-border: var(--border);
+  --color-surface: var(--surface);
+  --color-ink: var(--ink);
+  --color-bone: var(--bone);
+  --color-lime: var(--lime);
+
+  --font-serif: var(--font-instrument-serif), ui-serif, Georgia, serif;
+  --font-mono: var(--font-jetbrains-mono), ui-monospace, SFMono-Regular, monospace;
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+}
+
+/* Light-mode override variant: use as `light:...` */
+@custom-variant light (&:where([data-theme="light"], [data-theme="light"] *));
+
+/* ---------------------------------------------------------------------------
+   Base layer
+--------------------------------------------------------------------------- */
+
+@layer base {
+  * {
+    border-color: var(--border);
+  }
+
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-mono);
+    font-feature-settings: "ss01", "ss02", "cv11";
+  }
+
+  ::selection {
+    background-color: var(--accent);
+    color: var(--accent-foreground);
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Shiki dual-theme bridge
+   -------------------------------------------------------------------------
+   Shiki emits both `--shiki-light` and `--shiki-dark` style values on every
+   token. Default to the dark theme; the `light:` data-theme override flips
+   to the light variant.
+--------------------------------------------------------------------------- */
+
+.nyra-code .shiki,
+.nyra-code .shiki span {
+  color: var(--shiki-dark);
+  background-color: var(--shiki-dark-bg);
+  font-family: var(--font-mono);
+  font-style: var(--shiki-dark-font-style);
+  font-weight: var(--shiki-dark-font-weight);
+  text-decoration: var(--shiki-dark-text-decoration);
+}
+
+[data-theme="light"] .nyra-code .shiki,
+[data-theme="light"] .nyra-code .shiki span {
+  color: var(--shiki-light);
+  background-color: var(--shiki-light-bg);
+  font-style: var(--shiki-light-font-style);
+  font-weight: var(--shiki-light-font-weight);
+  text-decoration: var(--shiki-light-text-decoration);
+}
+
+.nyra-code pre {
+  background: transparent !important;
+}

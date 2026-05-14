@@ -1,0 +1,52 @@
+export const metadata = {
+  title: "Components",
+  description: "A map of Nyra's catalog by category, with deep links into every component page.",
+};
+
+# Components
+
+Nyra organizes the catalog into eight categories. Each category lives in its own folder under `components/ui/` so you can drop a category into your project without picking through a flat list.
+
+## Folder layout
+
+```bash
+components/ui/
+├── background/   # Drifting gradients, particles, beams
+├── button/       # Magnetic, shimmer, beam variants
+├── card/         # Tilt, glow, bento, hover lifts
+├── data/         # Marquees, comparison tables, pricing
+├── form/         # Multi-step, autocomplete, animated inputs
+├── hero/         # Hero sections with motion baked in
+├── nav/          # Floating docks, animated tabs, sidebars
+└── text/         # Word reveals, tickers, gradient text
+```
+
+## Browse by category
+
+| Category | What's inside |
+| --- | --- |
+| [Backgrounds](/components) | Aurora, sparkles, animated grids, meteor showers |
+| [Buttons](/components) | Magnetic, shimmer, border beam, rainbow |
+| [Cards](/components) | Tilt, glow, expandable, bento |
+| [Text effects](/components) | Word reveal, number ticker, gradient text, shimmer |
+| [Heroes](/components) | Spotlight, split-screen, animated grid |
+| [Navigation](/components) | Floating dock, resizable navbar, sidebars |
+| [Forms](/components) | Multi-step, autocomplete, animated textareas |
+| [Data display](/components) | Marquee, pricing card, comparison table, logo cloud |
+
+<Callout type="info" title="The catalog is the source of truth">
+  This page links into the live catalog. Component-level docs (props, install
+  command, source) live on each component's detail page — that's where you
+  copy from.
+</Callout>
+
+## What every component ships
+
+Each component file is a single self-contained `.tsx` file. It exports a named React component (e.g. `MagneticButton`), declares its props with TypeScript, and uses `cn()` for class composition. No imports outside of:
+
+- `react`
+- `motion` (animated components only)
+- `lucide-react` (icons, when used)
+- `@/lib/utils` (the `cn` helper)
+
+That's it. Copy the file, read the props off the TS types, ship.
