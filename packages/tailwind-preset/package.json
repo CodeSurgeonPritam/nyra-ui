@@ -1,0 +1,34 @@
+{
+  "name": "@nyra/tailwind-preset",
+  "version": "0.0.1",
+  "description": "Nyra's design tokens as a Tailwind v4 CSS preset.",
+  "homepage": "https://nyra.dev/docs/theming",
+  "license": "MIT",
+  "author": "Pritam <pritamkunar13@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/CodeSurgeonPritam/nyra-ui",
+    "directory": "packages/tailwind-preset"
+  },
+  "type": "module",
+  "main": "./preset.css",
+  "style": "./preset.css",
+  "exports": {
+    ".": "./preset.css",
+    "./preset.css": "./preset.css"
+  },
+  "files": [
+    "preset.css",
+    "README.md"
+  ],
+  "keywords": [
+    "tailwindcss",
+    "tailwind-preset",
+    "nyra",
+    "design-tokens",
+    "css"
+  ],
+  "publishConfig": {
+    "access": "public"
+  }
+}

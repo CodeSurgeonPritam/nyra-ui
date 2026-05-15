@@ -1,0 +1,48 @@
+{
+  "name": "nyra",
+  "version": "0.0.1",
+  "description": "CLI for the Nyra component library. Copy components into your project in one command.",
+  "homepage": "https://nyra.dev",
+  "license": "MIT",
+  "author": "Pritam <pritamkunar13@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/CodeSurgeonPritam/nyra-ui",
+    "directory": "packages/cli"
+  },
+  "type": "module",
+  "bin": {
+    "nyra": "./dist/index.js"
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=18.17.0"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "dev": "tsc -p tsconfig.json --watch",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "dependencies": {
+    "picocolors": "^1.1.1",
+    "prompts": "^2.4.2"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.5",
+    "@types/prompts": "^2.4.9",
+    "typescript": "^5.7.3"
+  },
+  "keywords": [
+    "nyra",
+    "cli",
+    "react",
+    "components",
+    "ui"
+  ],
+  "publishConfig": {
+    "access": "public"
+  }
+}

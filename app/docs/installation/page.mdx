@@ -1,36 +1,67 @@
 export const metadata = {
   title: "Installation",
-  description: "Get a Next.js project ready for Nyra components.",
+  description: "Get a Next.js project ready for Nyra components — CLI or manual.",
 };
 
 # Installation
 
-Nyra components are copy-paste. There's no `@nyra/ui` package to install — instead you bring the few primitives Nyra builds on, and drop component files into your own `components/ui/` directory.
+There are two ways to add Nyra to a project. Both leave the source in your `components/ui/` directory — Nyra is copy-paste, not a runtime dependency.
 
-## 1. The base stack
+## With the Nyra CLI (recommended)
 
-Nyra assumes a modern Next.js + Tailwind setup. If you already have one, skip this section.
+The CLI handles the setup, fetches components on demand, and gates Pro components behind your license key.
+
+```bash
+pnpm dlx nyra@latest init
+```
+
+That command:
+
+1. Detects your package manager (pnpm, yarn, bun, or npm)
+2. Writes `lib/utils.ts` (the `cn()` helper)
+3. Adds `@import "@nyra/tailwind-preset";` to your global stylesheet
+4. Offers to install the runtime deps: `motion`, `clsx`, `tailwind-merge`, `lucide-react`, `@nyra/tailwind-preset`
+
+Then pick components from the [catalog](/components) and pull them in:
+
+```bash
+pnpm dlx nyra@latest add magnetic-button aurora-background tilt-card
+```
+
+Each component lands in `components/ui/<category>/<name>.tsx` and the CLI prompts to install any missing deps.
+
+### Pro components
+
+```bash
+pnpm dlx nyra@latest login --key NYRA-XXXX-XXXX-XXXX
+pnpm dlx nyra@latest add floating-dock
+```
+
+`login` saves your key to `~/.nyra/credentials` (file mode `0600`). Subsequent `add` calls send it as `Authorization: License NYRA-…`; the registry validates against the active license table before returning source.
+
+## Manual install
+
+If you'd rather not run a CLI, the setup is five small steps.
+
+### 1. The base stack
 
 ```bash
 pnpm create next-app@latest my-app --typescript --tailwind --app
 cd my-app
 ```
 
-## 2. Required runtime dependencies
-
-Every Nyra component listed below uses `clsx` + `tailwind-merge` for class merging, and most animated components use `motion`.
+### 2. Required runtime dependencies
 
 ```bash
 pnpm add motion clsx tailwind-merge lucide-react
+pnpm add -D @nyra/tailwind-preset
 ```
 
 <Callout type="info" title="Per-component dependencies">
-  The component detail page lists exactly which packages each file needs.
-  Pages without animation often have **zero** extra dependencies — only the
-  shared `cn()` helper.
+  Each component's detail page lists exactly which packages it needs. Pages without animation often have **zero** extra deps beyond the shared `cn()` helper.
 </Callout>
 
-## 3. The `cn` helper
+### 3. The `cn` helper
 
 Create `lib/utils.ts`:
 
@@ -43,15 +74,20 @@ export function cn(...inputs: ClassValue[]) {
 }
 ```
 
-Every component imports `cn` from `@/lib/utils`. If you use a different path alias, do a project-wide find-and-replace once.
+### 4. The Tailwind preset
 
-## 4. Design tokens
+In your `app/globals.css`, **after** the Tailwind import:
 
-The components reference a small palette of CSS variables. Drop these into your global stylesheet — see [Theming](/docs/theming) for the full list and how light/dark mode is wired.
+```css
+@import "tailwindcss";
+@import "@nyra/tailwind-preset";
+```
 
-## 5. Copy a component
+That gives you every Nyra design token (`--background`, `--accent`, `--border`, …) and the Tailwind utilities that read from them (`bg-background`, `text-accent`, `border-border`). Override any variable to rebrand the library — see [Theming](/docs/theming).
 
-Visit the [catalog](/components), pick a component, and copy its file into `components/ui/<category>/<name>.tsx` in your project. Use it like any other React component:
+### 5. Copy a component
+
+Open the [catalog](/components), pick a component, copy its source into `components/ui/<category>/<name>.tsx`, and use it like any other React component:
 
 ```tsx
 import { MagneticButton } from "@/components/ui/button/magnetic-button";
@@ -61,4 +97,4 @@ export default function Page() {
 }
 ```
 
-That's it. You now own the source — edit it freely, or leave it alone for the next update.
+You now own the source — edit freely, or leave it alone for the next update.
