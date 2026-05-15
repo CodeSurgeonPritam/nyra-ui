@@ -63,6 +63,47 @@ export const previews: Record<string, PreviewLoader> = {
   "animated-tabs": dynamic(
     () => import("@/components/previews/animated-tabs"),
   ),
+  vortex: dynamic(() => import("@/components/previews/vortex")),
+  "rainbow-button": dynamic(
+    () => import("@/components/previews/rainbow-button"),
+  ),
+  "confetti-button": dynamic(
+    () => import("@/components/previews/confetti-button"),
+  ),
+  "expandable-card": dynamic(
+    () => import("@/components/previews/expandable-card"),
+  ),
+  "stack-card": dynamic(() => import("@/components/previews/stack-card")),
+  "bento-grid-card": dynamic(
+    () => import("@/components/previews/bento-grid-card"),
+  ),
+  "scroll-reveal-text": dynamic(
+    () => import("@/components/previews/scroll-reveal-text"),
+  ),
+  "video-hero": dynamic(() => import("@/components/previews/video-hero")),
+  "animated-grid-hero": dynamic(
+    () => import("@/components/previews/animated-grid-hero"),
+  ),
+  "split-screen-hero": dynamic(
+    () => import("@/components/previews/split-screen-hero"),
+  ),
+  "resizable-navbar": dynamic(
+    () => import("@/components/previews/resizable-navbar"),
+  ),
+  sidebar: dynamic(() => import("@/components/previews/sidebar")),
+  "multi-step-form": dynamic(
+    () => import("@/components/previews/multi-step-form"),
+  ),
+  "file-upload": dynamic(() => import("@/components/previews/file-upload")),
+  "animated-textarea": dynamic(
+    () => import("@/components/previews/animated-textarea"),
+  ),
+  combobox: dynamic(() => import("@/components/previews/combobox")),
+  "stat-counter": dynamic(() => import("@/components/previews/stat-counter")),
+  "comparison-table": dynamic(
+    () => import("@/components/previews/comparison-table"),
+  ),
+  "logo-cloud": dynamic(() => import("@/components/previews/logo-cloud")),
 };
 
 export function getPreview(slug: string): PreviewLoader | undefined {

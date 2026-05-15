@@ -11,9 +11,6 @@ import {
   type NyraComponent,
 } from "@/lib/registry";
 import { ComponentPreview } from "@/components/site/component-preview";
-import { NyraMark } from "@/components/icons/nyra-mark";
-import { SearchTrigger } from "@/components/site/search-trigger";
-import { ThemeToggle } from "@/components/site/theme-toggle";
 import { cn } from "@/lib/utils";
 
 type Filter = Category | "all";
@@ -36,79 +33,68 @@ export default function ComponentsPage() {
   }, [filter, query]);
 
   return (
-    <main className="min-h-dvh">
-      <header className="flex items-center justify-between border-b border-border px-6 py-5 sm:px-10">
-        <Link href="/" className="flex items-center gap-2">
-          <NyraMark size={16} className="text-accent" />
-          <span className="font-serif text-xl italic leading-none tracking-tight">
-            nyra
-          </span>
-        </Link>
-        <div className="flex items-center gap-2">
-          <SearchTrigger />
-          <ThemeToggle />
-        </div>
+    <div className="flex flex-col gap-8">
+      <nav
+        aria-label="Breadcrumb"
+        className="flex items-center gap-1.5 text-xs text-foreground-muted"
+      >
+        <span className="text-foreground">Components</span>
+      </nav>
+
+      <header className="flex flex-col gap-3">
+        <h1 className="font-serif text-4xl leading-[1.05] tracking-tight sm:text-5xl">
+          Components.
+        </h1>
+        <p className="max-w-xl text-sm leading-relaxed text-foreground-muted sm:text-base">
+          {registry.length} components and counting. Hover any tile for the
+          live demo. Click through for the code.
+        </p>
       </header>
 
-      <section className="mx-auto max-w-7xl px-6 py-12 sm:px-10 sm:py-16">
-        <div className="flex flex-col gap-3">
-          <span className="text-[11px] uppercase tracking-[0.18em] text-foreground-muted">
-            The catalog
-          </span>
-          <h1 className="font-serif text-5xl leading-[0.95] tracking-tight sm:text-6xl">
-            Components.
-          </h1>
-          <p className="max-w-xl text-sm text-foreground-muted sm:text-base">
-            {registry.length} components and counting. Hover any tile for the
-            live demo. Click through for the code.
-          </p>
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <div className="relative flex-1 max-w-md">
+          <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-foreground-muted" />
+          <input
+            type="search"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            placeholder="Search components, tags…"
+            aria-label="Search components"
+            className="w-full rounded-md border border-border bg-surface py-2 pl-9 pr-3 text-sm placeholder:text-foreground-muted focus:border-foreground/30 focus:outline-none focus:ring-2 focus:ring-accent"
+          />
         </div>
-
-        <div className="mt-10 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-          <div className="relative flex-1 max-w-md">
-            <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-foreground-muted" />
-            <input
-              type="search"
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              placeholder="Search components, tags…"
-              aria-label="Search components"
-              className="w-full rounded-md border border-border bg-surface py-2 pl-9 pr-3 text-sm placeholder:text-foreground-muted focus:border-foreground/30 focus:outline-none focus:ring-2 focus:ring-accent"
-            />
-          </div>
-          <div className="-mx-2 flex flex-wrap items-center gap-1 overflow-x-auto px-2 sm:mx-0 sm:px-0">
+        <div className="-mx-2 flex flex-wrap items-center gap-1 overflow-x-auto px-2 sm:mx-0 sm:px-0">
+          <FilterChip
+            label="All"
+            active={filter === "all"}
+            onClick={() => setFilter("all")}
+          />
+          {activeCategories().map((c) => (
             <FilterChip
-              label="All"
-              active={filter === "all"}
-              onClick={() => setFilter("all")}
+              key={c.id}
+              label={c.label}
+              active={filter === c.id}
+              onClick={() => setFilter(c.id)}
             />
-            {activeCategories().map((c) => (
-              <FilterChip
-                key={c.id}
-                label={c.label}
-                active={filter === c.id}
-                onClick={() => setFilter(c.id)}
-              />
-            ))}
-          </div>
-        </div>
-
-        <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {visible.map((c) => (
-            <ComponentTile key={c.slug} component={c} />
           ))}
         </div>
+      </div>
 
-        {visible.length === 0 ? (
-          <div className="mt-20 flex flex-col items-center gap-2 text-center text-sm text-foreground-muted">
-            <span className="font-serif text-3xl italic text-foreground">
-              Nothing here.
-            </span>
-            <span>Try a different filter or clear the search.</span>
-          </div>
-        ) : null}
-      </section>
-    </main>
+      <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-3">
+        {visible.map((c) => (
+          <ComponentTile key={c.slug} component={c} />
+        ))}
+      </div>
+
+      {visible.length === 0 && (
+        <div className="mt-12 flex flex-col items-center gap-2 text-center text-sm text-foreground-muted">
+          <span className="font-serif text-3xl italic text-foreground">
+            Nothing here.
+          </span>
+          <span>Try a different filter or clear the search.</span>
+        </div>
+      )}
+    </div>
   );
 }
 
@@ -146,18 +132,18 @@ function ComponentTile({ component }: { component: NyraComponent }) {
       <div className="overflow-hidden rounded-2xl border border-border bg-surface transition-colors group-hover:border-foreground/20 group-focus-visible:ring-2 group-focus-visible:ring-accent">
         <ComponentPreview
           slug={component.slug}
-          minHeight={220}
+          minHeight={200}
           className="rounded-none border-0"
         />
-        <div className="flex items-start justify-between gap-4 border-t border-border p-5">
+        <div className="flex items-start justify-between gap-4 border-t border-border p-4">
           <div className="min-w-0">
             <div className="flex items-center gap-2">
               <h2 className="truncate text-sm font-medium">{component.name}</h2>
-              {component.pro ? (
+              {component.pro && (
                 <span className="rounded-full border border-accent/40 bg-accent/10 px-1.5 py-0.5 text-[9px] uppercase tracking-[0.16em] text-accent">
                   Pro
                 </span>
-              ) : null}
+              )}
             </div>
             <p className="mt-1 line-clamp-2 text-xs text-foreground-muted">
               {component.description}
