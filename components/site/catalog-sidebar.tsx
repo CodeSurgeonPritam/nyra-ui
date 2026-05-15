@@ -33,7 +33,8 @@ export function CatalogSidebar() {
   }, []);
 
   return (
-    <nav className="flex flex-col gap-1 text-sm">
+    <div className="flex h-full min-h-0 flex-col">
+      <nav className="flex min-h-0 flex-1 flex-col gap-1 overflow-y-auto pr-1 text-sm">
       <Section label="Follow for updates" icon={<Twitter className="h-3.5 w-3.5" />}>
         <Leaf
           href="https://x.com/nyra"
@@ -111,8 +112,11 @@ export function CatalogSidebar() {
         );
       })}
 
-      <SidebarUpsell />
-    </nav>
+      </nav>
+      <div className="shrink-0 border-t border-border/60 pt-3 mt-3">
+        <SidebarUpsell />
+      </div>
+    </div>
   );
 }
 
@@ -216,7 +220,7 @@ function Leaf({
 
 function SidebarUpsell() {
   return (
-    <div className="mt-6 overflow-hidden rounded-xl border border-border bg-surface">
+    <div className="overflow-hidden rounded-xl border border-border bg-surface">
       <div className="relative h-24 overflow-hidden">
         <div
           className="absolute inset-0"

@@ -104,6 +104,57 @@ export const previews: Record<string, PreviewLoader> = {
     () => import("@/components/previews/comparison-table"),
   ),
   "logo-cloud": dynamic(() => import("@/components/previews/logo-cloud")),
+  "pulse-button": dynamic(() => import("@/components/previews/pulse-button")),
+  "scale-button": dynamic(() => import("@/components/previews/scale-button")),
+  "arrow-button": dynamic(() => import("@/components/previews/arrow-button")),
+  "loading-button": dynamic(
+    () => import("@/components/previews/loading-button"),
+  ),
+  tooltip: dynamic(() => import("@/components/previews/tooltip")),
+  "flip-card": dynamic(() => import("@/components/previews/flip-card")),
+  "shine-card": dynamic(() => import("@/components/previews/shine-card")),
+  "reveal-card": dynamic(() => import("@/components/previews/reveal-card")),
+  "skeleton-card": dynamic(
+    () => import("@/components/previews/skeleton-card"),
+  ),
+  "stagger-group": dynamic(
+    () => import("@/components/previews/stagger-group"),
+  ),
+  "lift-button": dynamic(() => import("@/components/previews/lift-button")),
+  "glow-button": dynamic(() => import("@/components/previews/glow-button")),
+  "border-draw-button": dynamic(
+    () => import("@/components/previews/border-draw-button"),
+  ),
+  "fill-sweep-button": dynamic(
+    () => import("@/components/previews/fill-sweep-button"),
+  ),
+  "text-swap-button": dynamic(
+    () => import("@/components/previews/text-swap-button"),
+  ),
+  "shake-button": dynamic(() => import("@/components/previews/shake-button")),
+  "ripple-button": dynamic(
+    () => import("@/components/previews/ripple-button"),
+  ),
+  "animated-nav-link": dynamic(
+    () => import("@/components/previews/animated-nav-link"),
+  ),
+  breadcrumbs: dynamic(() => import("@/components/previews/breadcrumbs")),
+  "hamburger-button": dynamic(
+    () => import("@/components/previews/hamburger-button"),
+  ),
+  "search-expand": dynamic(
+    () => import("@/components/previews/search-expand"),
+  ),
+  "auto-hide-navbar": dynamic(
+    () => import("@/components/previews/auto-hide-navbar"),
+  ),
+  "dropdown-menu": dynamic(
+    () => import("@/components/previews/dropdown-menu"),
+  ),
+  "mega-menu": dynamic(() => import("@/components/previews/mega-menu")),
+  "mobile-drawer": dynamic(
+    () => import("@/components/previews/mobile-drawer"),
+  ),
 };
 
 export function getPreview(slug: string): PreviewLoader | undefined {
