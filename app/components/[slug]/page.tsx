@@ -13,6 +13,7 @@ import { readComponentFile } from "@/lib/component-source";
 import { CodeBlock } from "@/components/site/code-block";
 import { ComponentPreview } from "@/components/site/component-preview";
 import { ComponentShowcase } from "@/components/site/component-showcase";
+import { DlxTabs } from "@/components/site/dlx-tabs";
 import { InstallTabs } from "@/components/site/install-tabs";
 import { ProPaywall } from "@/components/site/pro-paywall";
 import { getCurrentUser } from "@/lib/auth";
@@ -122,9 +123,34 @@ export default async function ComponentDetailPage({
         }
       />
 
+      <section className="flex flex-col gap-3">
+        <h2 className="font-serif text-2xl">Add this component</h2>
+        <p className="text-sm text-foreground-muted">
+          One-shot install via the Nyra CLI — fetches the source, drops it in
+          <code className="mx-1 rounded border border-border bg-surface px-1.5 py-0.5 font-mono text-[0.85em]">
+            components/ui/{component.files[0]}
+          </code>
+          , and offers to install any missing deps.
+        </p>
+        <DlxTabs args={`nyra@latest add ${component.slug}`} />
+        {component.pro && (
+          <p className="text-xs text-foreground-muted">
+            Pro component — run{" "}
+            <code className="rounded border border-border bg-surface px-1 py-0.5 font-mono text-[0.85em]">
+              nyra login --key NYRA-XXXX-XXXX-XXXX
+            </code>{" "}
+            first.
+          </p>
+        )}
+      </section>
+
       {component.dependencies.length > 0 && (
         <section className="flex flex-col gap-3">
-          <h2 className="font-serif text-2xl">Install dependencies</h2>
+          <h2 className="font-serif text-2xl">Or install deps manually</h2>
+          <p className="text-sm text-foreground-muted">
+            If you'd rather copy the source by hand, install the runtime
+            packages this component needs.
+          </p>
           <InstallTabs packages={component.dependencies} />
         </section>
       )}

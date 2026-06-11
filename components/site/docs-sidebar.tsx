@@ -14,6 +14,7 @@ const SECTIONS: DocSection[] = [
     links: [
       { href: "/docs", label: "Introduction" },
       { href: "/docs/installation", label: "Installation" },
+      { href: "/docs/cli", label: "CLI" },
     ],
   },
   {

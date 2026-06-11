@@ -1,0 +1,78 @@
+import { SiteNav } from "@/components/site/site-nav";
+import { SiteFooter } from "@/components/site/site-footer";
+
+export const metadata = {
+  title: "License",
+  description:
+    "The licenses Nyra ships under — MIT for free components, a commercial seat license for Pro.",
+};
+
+export default function Page({ children }) {
+  return (
+    <div className="min-h-dvh">
+      <SiteNav />
+      <main className="mx-auto max-w-3xl px-6 py-16 sm:px-10 sm:py-24">
+        {children}
+      </main>
+      <SiteFooter />
+    </div>
+  );
+}
+
+# License
+
+Nyra ships under two licenses, depending on what you take.
+
+## Free components — MIT
+
+Every component on the catalog **without** a `Pro` badge is released under
+the MIT License. Copy it, modify it, ship it commercially — we just ask
+that the copyright notice stays in your distribution.
+
+```text
+MIT License
+
+Copyright (c) 2026 Pritam — Nyra UI
+
+Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and associated documentation files (the
+"Software"), to deal in the Software without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to
+the following conditions:
+
+The above copyright notice and this permission notice shall be included
+in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+```
+
+## Pro components and templates — seat license
+
+Pro components and templates are released under Nyra's **commercial seat
+license**. The short version:
+
+- **Build with them anywhere.** Personal projects, commercial work,
+  client deliverables, internal tools — all fine.
+- **One seat per developer.** A team license covers up to 10 developers
+  on a single workspace.
+- **Don't republish.** No reposting Pro source to a public registry, no
+  reselling the components, no sublicensing them as part of a competing
+  marketplace.
+
+The full terms live on the [Terms of Service](/terms) page under the
+"Nyra Pro" heading.
+
+## Questions
+
+If you're not sure which license applies to what you're doing, email
+<a href="mailto:hello@nyra.dev">hello@nyra.dev</a> and we'll answer in plain
+language. We'd rather have one boring conversation than confused users
+shipping under the wrong terms.

@@ -1,0 +1,76 @@
+import { BlogPostShell } from "@/components/site/blog-post-shell";
+import { getPost } from "@/lib/blog";
+
+export const metadata = (() => {
+  const p = getPost("why-nyra");
+  return { title: p?.title, description: p?.description };
+})();
+
+export default function Page({ children }) {
+  return <BlogPostShell slug="why-nyra">{children}</BlogPostShell>;
+}
+
+Every component library on the market looks the same. Purple gradients. Inter
+font. A grid of three cards with rounded corners and a soft shadow. Somewhere
+a button has `bg-gradient-to-r from-blue-500 to-purple-500`. You've seen the
+website before; you'll see it again tomorrow.
+
+I don't want to ship that website. I don't think most developers do, either —
+but the cost of *not* shipping it is high. Either you spend a weekend
+reinventing the wheel, or you accept that your work is going to look like
+everyone else's. Most people, sensibly, pick the wheel.
+
+Nyra is for the small but stubborn subset who pick the third option:
+**components that already don't look like everyone else's.**
+
+## The bet
+
+Three things that go together:
+
+1. **Editorial type.** Instrument Serif italic for display, JetBrains Mono
+   for body. Not Inter. Not Geist. The serif sets the tone before any
+   component renders.
+2. **Electric lime.** `#c8ff3c` against `#0a0a0a`. Not purple. Not blue.
+   The accent does the work of a logo before you've added one.
+3. **Original motion.** Not "fade in on scroll." Cursor-following spotlights,
+   magnetic buttons, drifting auroras, conic-gradient beams. Motion that
+   means something, not motion as decoration.
+
+Pick any two of these and you have a decent library. Pick all three and you
+have an aesthetic that survives a screenshot.
+
+## What Nyra is not
+
+It's not a design system. There is no `<NyraProvider>`. There are no theme
+context providers. There is no opinion about how you structure your routes
+or what your CSS-in-JS solution should be.
+
+It's a **catalog**. You open a component, copy the file, paste it in your
+project, install the listed dependencies, and you own it. If it breaks, you
+fix it — same as any file in your repo. If you don't like the lime, you
+override one CSS variable.
+
+This is shadcn's idea, but pointed at a different aesthetic. The components
+themselves are different; the *distribution model* isn't.
+
+## Why now
+
+The component library space is having a moment. shadcn cracked the
+copy-paste model. Aceternity proved people will pay for motion. Magic UI
+proved breadth matters. The next move isn't another shadcn-clone — it's
+the library that picks an aesthetic and *commits* to it.
+
+Nyra is that library. Or it will be — you're early.
+
+If that sounds like the project you'd want to use, you can:
+
+- [Browse the catalog](/components)
+- [Read the docs](/docs)
+- [Star the repo](https://github.com/CodeSurgeonPritam/nyra-ui)
+
+Forty components at launch. Two new every week. Templates after that. A CLI
+when the library earns one.
+
+Build something that doesn't look like everything else.
+
+— Pritam

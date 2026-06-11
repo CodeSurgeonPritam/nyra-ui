@@ -1,0 +1,70 @@
+import { BlogPostShell } from "@/components/site/blog-post-shell";
+import { getPost } from "@/lib/blog";
+
+export const metadata = (() => {
+  const p = getPost("tokens-not-themes");
+  return { title: p?.title, description: p?.description };
+})();
+
+export default function Page({ children }) {
+  return <BlogPostShell slug="tokens-not-themes">{children}</BlogPostShell>;
+}
+
+Most component libraries ship a "theme system." A `ThemeProvider`, a config
+file, a context, a way to register variants, and — somewhere — a TypeScript
+type that has a hundred fields and a generic parameter. The library author
+calls this *flexibility*. The library *user* calls this their Saturday
+afternoon.
+
+Nyra has no theme system. There is no provider. There is no config file.
+
+What there is, instead, is **a small set of CSS variables**.
+
+```css
+:root {
+  --ink: #0a0a0a;
+  --bone: #f5f3ee;
+  --lime: #c8ff3c;
+  --rose: #ff8466;
+  --background: var(--ink);
+  --foreground: var(--bone);
+  --accent: var(--lime);
+  --border: #1f1f1d;
+}
+```
+
+That's most of it. Override `--accent` and every component in the library
+picks up your color. Override `--font-serif` and every heading switches
+typeface. There's no rebuild step, no codegen, no `nyra.config.ts`. The
+cascade does the work.
+
+## Why not Tailwind config
+
+Tailwind v4 lets you put design tokens in CSS via `@theme`. That's good, and
+we use it. But the *override surface* should be CSS variables, not Tailwind
+keys. The reason: anyone, in any framework, can change a CSS variable.
+Storybook stories. Email templates. A coworker who only knows Webflow.
+
+Tokens travel; configs don't.
+
+## What you lose
+
+This approach gives up some things on purpose:
+
+- **No "themes" array.** You can't `theme="ocean"` your way to a different
+  palette. You change the variables and you have a different palette.
+- **No variant explosion.** Components don't accept a `variant` prop with
+  thirty values. They accept one or two meaningful options and you compose.
+- **No theme TypeScript.** Your IDE won't autocomplete color names. The
+  trade is that the type surface stays small enough to read.
+
+## What you keep
+
+- **A five-minute swap.** Your designer hands you a hex code and you ship
+  the rebranded library before standup.
+- **Storybook and email previews that just work.** No provider plumbing.
+- **A library that doesn't fight you when you outgrow it.** Eject any
+  component by copying its file — no implicit theme dependency follows.
+
+The components don't know they have a theme. They just read variables.
+That's the whole trick.

@@ -816,6 +816,90 @@ export const registry: NyraComponent[] = [
     dependencies: ["motion"],
     createdAt: "2026-05-15",
   },
+  {
+    slug: "fade-in-text",
+    name: "Fade In Text",
+    description:
+      "Directional text entrance — fades from up, down, left, right, scale, or blur. Mount or viewport-triggered.",
+    category: "text",
+    tags: ["entrance", "animated", "primitive"],
+    pro: false,
+    files: ["text/fade-in-text.tsx"],
+    dependencies: ["motion"],
+    createdAt: "2026-05-15",
+  },
+  {
+    slug: "mask-reveal-text",
+    name: "Mask Reveal Text",
+    description:
+      "Line-by-line curtain reveal — each line rises into view from behind an overflow mask, staggered.",
+    category: "text",
+    tags: ["entrance", "editorial", "animated"],
+    pro: false,
+    files: ["text/mask-reveal-text.tsx"],
+    dependencies: ["motion"],
+    createdAt: "2026-05-15",
+  },
+  {
+    slug: "scramble-text",
+    name: "Scramble Text",
+    description:
+      "Decode-style reveal — characters tumble through a random charset and lock into place left to right.",
+    category: "text",
+    tags: ["animated", "interactive"],
+    pro: true,
+    files: ["text/scramble-text.tsx"],
+    dependencies: [],
+    createdAt: "2026-05-15",
+  },
+  {
+    slug: "glitch-text",
+    name: "Glitch Text",
+    description:
+      "RGB-channel-split glitch. Rose and accent overlays clip-path-jump across the text. Hover or always-on.",
+    category: "text",
+    tags: ["animated", "css-only", "effect"],
+    pro: false,
+    files: ["text/glitch-text.tsx"],
+    dependencies: [],
+    createdAt: "2026-05-15",
+  },
+  {
+    slug: "word-rotator",
+    name: "Word Rotator",
+    description:
+      "Cycles through a list of words in place — each rises from below, the previous slides out the top.",
+    category: "text",
+    tags: ["animated", "hero"],
+    pro: false,
+    files: ["text/word-rotator.tsx"],
+    dependencies: ["motion"],
+    createdAt: "2026-05-15",
+  },
+  {
+    slug: "odometer",
+    name: "Odometer",
+    description:
+      "Digit-flip counter. Each digit lives in its own 0–9 column; the column springs up to the new value.",
+    category: "text",
+    tags: ["animated", "data", "numbers"],
+    pro: true,
+    files: ["text/odometer.tsx"],
+    dependencies: ["motion"],
+    createdAt: "2026-05-15",
+  },
+  {
+    slug: "highlight-text",
+    name: "Highlight Text",
+    description:
+      "Marker-style highlight that paints in beneath the text. Hover, in-view, or always-on triggers.",
+    category: "text",
+    tags: ["hover", "css-only", "editorial"],
+    pro: false,
+    files: ["text/highlight-text.tsx"],
+    dependencies: [],
+    createdAt: "2026-05-15",
+  },
 ];
 
 export function adjacentEntries(slug: string) {

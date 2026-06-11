@@ -32,6 +32,18 @@ export const env = {
 
   // App
   NEXT_PUBLIC_APP_URL: get("NEXT_PUBLIC_APP_URL") ?? "https://nyra.dev",
+
+  // Email — Resend (newsletter + welcome series)
+  RESEND_API_KEY: get("RESEND_API_KEY"),
+  RESEND_FROM_EMAIL: get("RESEND_FROM_EMAIL") ?? "Nyra <hello@nyra.dev>",
+  RESEND_AUDIENCE_ID: get("RESEND_AUDIENCE_ID"),
+
+  // Analytics — Plausible
+  NEXT_PUBLIC_PLAUSIBLE_DOMAIN: get("NEXT_PUBLIC_PLAUSIBLE_DOMAIN"),
+  NEXT_PUBLIC_PLAUSIBLE_SCRIPT: get("NEXT_PUBLIC_PLAUSIBLE_SCRIPT"),
+
+  // Error tracking — Sentry (wired after `npx @sentry/wizard@latest -i nextjs`)
+  NEXT_PUBLIC_SENTRY_DSN: get("NEXT_PUBLIC_SENTRY_DSN"),
 };
 
 export function isDbConfigured(): boolean {
@@ -44,6 +56,18 @@ export function isClerkConfigured(): boolean {
 
 export function isLemonSqueezyConfigured(): boolean {
   return Boolean(env.LEMONSQUEEZY_API_KEY && env.LEMONSQUEEZY_STORE_ID);
+}
+
+export function isResendConfigured(): boolean {
+  return Boolean(env.RESEND_API_KEY);
+}
+
+export function isPlausibleConfigured(): boolean {
+  return Boolean(env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN);
+}
+
+export function isSentryConfigured(): boolean {
+  return Boolean(env.NEXT_PUBLIC_SENTRY_DSN);
 }
 
 /** Pro features need all three: DB to record, Clerk to identify, LS to charge. */

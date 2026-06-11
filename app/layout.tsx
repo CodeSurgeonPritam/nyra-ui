@@ -90,6 +90,16 @@ export default function RootLayout({
       <head>
         {/* Runs before paint to avoid a flash of the wrong theme. */}
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
+        {process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN && (
+          <script
+            defer
+            data-domain={process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN}
+            src={
+              process.env.NEXT_PUBLIC_PLAUSIBLE_SCRIPT ??
+              "https://plausible.io/js/script.js"
+            }
+          />
+        )}
       </head>
       <body className="min-h-dvh bg-background text-foreground font-mono antialiased">
         <MaybeClerk>

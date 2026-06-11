@@ -1,0 +1,72 @@
+import { BlogPostShell } from "@/components/site/blog-post-shell";
+import { getPost } from "@/lib/blog";
+
+export const metadata = (() => {
+  const p = getPost("the-electric-lime");
+  return { title: p?.title, description: p?.description };
+})();
+
+export default function Page({ children }) {
+  return <BlogPostShell slug="the-electric-lime">{children}</BlogPostShell>;
+}
+
+Color is the cheapest way to be remembered.
+
+Logos take months. Wordmarks take a typographer. A motion system takes a
+team. A *single hex value* takes one decision — and from that point forward,
+every screenshot of your product carries it.
+
+Nyra's color is `#c8ff3c`. Electric lime on ink black. We tried other things
+first. None of them stuck.
+
+## What we tried
+
+**Purple.** Every dev tool is purple. Linear, Vercel's old palette,
+half the YC batch from 2022. Putting Nyra in purple was like printing the
+logo upside-down — you couldn't tell anything apart.
+
+**Saturated red.** Too aggressive for editorial typography. The serif and
+the red fought each other on every page; one of them had to lose.
+
+**Teal.** Too tasteful. Survived one design review and immediately blended
+into the background. Memorable colors are slightly *wrong* — they have
+something to fight against.
+
+**Lime.** Wrong in the right way. Against ink black, it reads almost
+neon — too much so, at first. Against bone (the light theme background),
+it calms down. The contrast carries the brand without screaming.
+
+## Where to use it
+
+The hard part of an electric accent is *restraint*. The cheap version of
+this aesthetic is "lime everywhere" — every button, every link, every
+border. After ten seconds your interface looks like a parking lot at night.
+
+The rule we settled on:
+
+> **Lime is for what you want noticed once.**
+
+In practice:
+
+- The primary CTA. Not every button — the *one* button on the screen that
+  matters.
+- Hover states. The accent appears when the user is already paying attention.
+- Tiny indicators. Active tab. Open status. Selected option.
+- Editorial italics. The word the sentence is built around.
+
+Everywhere else: bone on ink, with the muted token doing the work. The
+moment lime stops being scarce, it stops being signal.
+
+## The light-mode trap
+
+The hardest part of lime is the light theme. On a dark background, the
+contrast is high enough to feel ambient. On a bone background, lime against
+bone is barely legible — you can read it, but it doesn't *pop*.
+
+The fix: in light mode, the accent foreground swaps to ink. We keep the
+lime fill (so the brand color is the same in both themes), but the text
+sitting on top changes from bone to ink. Same color, different role.
+
+That's the whole brand. One hex value, used carefully. Everything else —
+the type, the motion, the components — exists to give the lime something
+to be loud against.

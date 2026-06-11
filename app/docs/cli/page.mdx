@@ -1,0 +1,157 @@
+export const metadata = {
+  title: "CLI",
+  description:
+    "The Nyra CLI — one command per component. Setup, add, list, and Pro license management.",
+};
+
+# CLI
+
+The Nyra CLI is the fastest way to drop components into a project. It fetches the source from the registry, writes the file into `components/ui/<category>/<name>.tsx`, and offers to install any missing runtime dependencies.
+
+The CLI is published on npm as **`nyra`** — no scope. You don't need to install it; `pnpm dlx` (or `npx` / `yarn dlx` / `bunx`) runs the latest version on demand.
+
+<Callout type="tip" title="Project requirements">
+  The CLI assumes a `package.json` at the project root. It works with Next.js, Vite, Remix, Astro, Tanstack Start — anywhere a `components/ui/` folder is welcome. Tailwind v4 is required; Nyra depends on the v4 `@theme` directive.
+</Callout>
+
+## Quick start
+
+```bash
+pnpm dlx nyra@latest init
+pnpm dlx nyra@latest add magnetic-button
+```
+
+That's the whole flow. `init` sets up the `cn()` helper and the Tailwind preset import; `add` fetches a component into `components/ui/button/magnetic-button.tsx` and prompts to install `motion`. Repeat `add` with any slug from the [catalog](/components).
+
+## Commands
+
+### `nyra init`
+
+Sets up a project for Nyra components. **Idempotent — re-running is a no-op.**
+
+```bash
+pnpm dlx nyra@latest init
+```
+
+What it does:
+
+1. Walks up from the current directory to find the project root (looks for `package.json`).
+2. Writes `lib/utils.ts` with the `cn()` helper (skipped if it already exists).
+3. Adds `@import "@nyra/tailwind-preset";` to your global stylesheet, right after `@import "tailwindcss";`.
+4. Detects your package manager (pnpm / yarn / bun / npm) and offers to install the shared runtime deps: `motion`, `clsx`, `tailwind-merge`, `lucide-react`, `@nyra/tailwind-preset`.
+
+**Flags:**
+
+| Flag | Effect |
+| --- | --- |
+| `--yes`, `-y` | Skip the confirmation prompt before running the install. |
+
+### `nyra add <slug> [...more]`
+
+Pulls one or more components into `components/ui/`.
+
+```bash
+pnpm dlx nyra@latest add magnetic-button aurora-background tilt-card
+```
+
+Each slug is fetched from `https://nyra.dev/r/<slug>`, written to disk preserving its category subfolder, and accumulated into a deduped dependency list. After all files are written, the CLI prompts once to install any missing deps via your detected package manager.
+
+**Flags:**
+
+| Flag | Effect |
+| --- | --- |
+| `--force`, `-f` | Overwrite existing component files. By default the CLI refuses to clobber. |
+| `--yes`, `-y` | Skip the dep-install confirmation. |
+
+**Pro components:** the registry returns `402 Payment Required` until you run `nyra login` with a valid license key. The CLI surfaces a clear message; rerun `add` after logging in.
+
+### `nyra list`
+
+Browse the catalog from the terminal. Lists every component with its slug, category, and Pro/free status.
+
+```bash
+pnpm dlx nyra@latest list
+```
+
+Useful when you remember the *shape* of a component but not the slug. Pipe through `grep` to filter:
+
+```bash
+pnpm dlx nyra@latest list | grep button
+```
+
+### `nyra login [--key NYRA-...]`
+
+Saves your Pro license key to `~/.nyra/credentials` with file mode `0600`. The key is sent as `Authorization: License NYRA-XXXX-XXXX-XXXX` on every subsequent `add` for Pro components.
+
+```bash
+pnpm dlx nyra@latest login --key NYRA-XXXX-XXXX-XXXX
+```
+
+Without `--key`, the CLI prompts for the key interactively (input is masked).
+
+### `nyra logout`
+
+Forgets the stored license. Removes `~/.nyra/credentials`.
+
+```bash
+pnpm dlx nyra@latest logout
+```
+
+## Environment variables
+
+| Variable | Purpose |
+| --- | --- |
+| `NYRA_REGISTRY_URL` | Override the registry origin. Defaults to `https://nyra.dev/r`. Useful for testing against a local dev server: `NYRA_REGISTRY_URL=http://localhost:3000/r pnpm dlx nyra@latest add magnetic-button`. |
+
+## How the registry works
+
+The CLI is a thin client over two HTTP endpoints:
+
+- `GET /r` — returns the catalog index (metadata only, no source).
+- `GET /r/:slug` — returns the component's full source, plus its dependency list. Pro components return `402` without a valid license header.
+
+Every component on the catalog is served from this endpoint — which means the code the CLI writes is byte-identical to what you see on the detail page. No drift, no re-encoded variants.
+
+## Where files land
+
+By default:
+
+```
+components/ui/
+├── button/magnetic-button.tsx
+├── background/aurora-background.tsx
+├── card/tilt-card.tsx
+└── ...
+```
+
+If your project uses the Next.js `src/` directory (i.e. `src/components/ui/` exists), the CLI writes there instead. Either layout works with the `@/components/ui/*` path alias that Next.js sets up by default.
+
+## Running locally for development
+
+If you've cloned the Nyra repo and want to test the CLI against your local registry:
+
+```bash
+# In the cloned repo
+pnpm install
+pnpm dev                                              # starts the site at localhost:3000
+
+# In a separate project where you want to add components
+NYRA_REGISTRY_URL=http://localhost:3000/r \
+  node /path/to/nyra-ui/packages/cli/dist/index.js add magnetic-button
+```
+
+The `dist/` build is committed so the CLI runs without a build step.
+
+## Troubleshooting
+
+**"Couldn't find a package.json walking up from the current directory."**
+You're not inside a project. `cd` into your app first.
+
+**"File exists: components/ui/button/magnetic-button.tsx."**
+Pass `--force` to overwrite, or delete the file first.
+
+**"This component is Pro. Run `nyra login` first."**
+Run `pnpm dlx nyra@latest login --key NYRA-XXXX-XXXX-XXXX` and try again. See [Pricing](/pricing) for keys.
+
+**The install command runs but the deps don't appear.**
+Check whether your project uses a different package manager than the CLI detected. The CLI looks at lock files (`pnpm-lock.yaml`, `yarn.lock`, `bun.lock`); if you have a different lockfile, install the deps manually.

@@ -155,6 +155,19 @@ export const previews: Record<string, PreviewLoader> = {
   "mobile-drawer": dynamic(
     () => import("@/components/previews/mobile-drawer"),
   ),
+  "fade-in-text": dynamic(() => import("@/components/previews/fade-in-text")),
+  "mask-reveal-text": dynamic(
+    () => import("@/components/previews/mask-reveal-text"),
+  ),
+  "scramble-text": dynamic(
+    () => import("@/components/previews/scramble-text"),
+  ),
+  "glitch-text": dynamic(() => import("@/components/previews/glitch-text")),
+  "word-rotator": dynamic(() => import("@/components/previews/word-rotator")),
+  odometer: dynamic(() => import("@/components/previews/odometer")),
+  "highlight-text": dynamic(
+    () => import("@/components/previews/highlight-text"),
+  ),
 };
 
 export function getPreview(slug: string): PreviewLoader | undefined {

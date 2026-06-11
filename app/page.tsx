@@ -26,34 +26,33 @@ const FEATURED_SLUGS = [
 
 const TESTIMONIALS = [
   {
-    quote:
-      "Nyra is the first component library where I didn't immediately want to restyle every primitive.",
-    name: "Iris Park",
-    title: "Founding designer, Halftone",
+    quote: "Your quote here — when the first wave of Pro members ships.",
+    name: "Reserved",
+    title: "First paid Pro customer",
   },
   {
-    quote:
-      "Editorial typography in a dev tool. The lime is dangerous. I love it.",
-    name: "Théo Marchand",
-    title: "Lead engineer, Atelier 03",
+    quote: "Your quote here — when the first portfolio goes live on the showcase.",
+    name: "Reserved",
+    title: "First showcase submission",
   },
   {
-    quote:
-      "I shipped a landing in an afternoon and it actually looks like ours.",
-    name: "Sana Aziz",
-    title: "Co-founder, Pareto",
+    quote: "Your quote here — when the first agency picks up a team license.",
+    name: "Reserved",
+    title: "First team-license buyer",
   },
 ];
 
+// Honest placeholders until the wait list converts to named teams.
+// Replace each entry with the company / studio / handle as approvals come in.
 const TRUSTED_BY = [
-  "Lyra Labs",
-  "Halftone",
-  "Constellate",
-  "Northwind",
-  "Atelier 03",
-  "Bondi",
-  "Pareto",
-  "Stellate",
+  "Your studio here",
+  "Your team here",
+  "Your name here",
+  "Reserved",
+  "Reserved",
+  "Reserved",
+  "Reserved",
+  "Reserved",
 ];
 
 export default function Home() {

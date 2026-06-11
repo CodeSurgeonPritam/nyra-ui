@@ -1,45 +1,92 @@
 export const metadata = {
   title: "Installation",
-  description: "Get a Next.js project ready for Nyra components — CLI or manual.",
+  description:
+    "Add Nyra to a Next.js (or Vite, Remix, Astro) project in two commands — or by hand if you prefer.",
 };
 
 # Installation
 
-There are two ways to add Nyra to a project. Both leave the source in your `components/ui/` directory — Nyra is copy-paste, not a runtime dependency.
+Nyra is a **copy-paste** library. Components live in your `components/ui/` directory after you add them — there's no runtime dependency on `nyra`, no provider, no compile-time magic. Once a component is in your project, you own it.
 
-## With the Nyra CLI (recommended)
+There are two ways to add components:
 
-The CLI handles the setup, fetches components on demand, and gates Pro components behind your license key.
+1. **The Nyra CLI** — one command per component. Recommended.
+2. **Manual** — copy the source from the catalog and install the deps yourself.
+
+Both leave you with the same files in the same place.
+
+## Quick start
+
+```bash
+pnpm dlx nyra@latest init
+pnpm dlx nyra@latest add magnetic-button
+```
+
+`init` is run once per project: it writes `lib/utils.ts`, adds the Tailwind preset import to your global CSS, and offers to install the shared runtime deps. `add` is run per component.
+
+For the full CLI reference (commands, flags, Pro login, environment overrides), see [CLI](/docs/cli).
+
+## Prerequisites
+
+Nyra targets the modern Next.js / Tailwind v4 stack. If you're starting fresh:
+
+```bash
+pnpm create next-app@latest my-app --typescript --tailwind --app
+cd my-app
+```
+
+Tailwind **v4 is required** — Nyra uses the v4 `@theme` directive and CSS-first config. If your project is still on v3, upgrade before installing (or see the manual path below for an inline alternative).
+
+<Callout type="info" title="Other frameworks">
+  The CLI doesn't care what framework you're in — it only needs a `package.json` and a `components/ui/` directory. We've tested it with Next.js, Vite + React, Remix, and Astro.
+</Callout>
+
+## Path A — With the Nyra CLI
+
+### 1. Initialise the project
 
 ```bash
 pnpm dlx nyra@latest init
 ```
 
-That command:
+This is idempotent — running it twice is a no-op. It will:
 
-1. Detects your package manager (pnpm, yarn, bun, or npm)
-2. Writes `lib/utils.ts` (the `cn()` helper)
-3. Adds `@import "@nyra/tailwind-preset";` to your global stylesheet
-4. Offers to install the runtime deps: `motion`, `clsx`, `tailwind-merge`, `lucide-react`, `@nyra/tailwind-preset`
+- Write `lib/utils.ts` (the `cn()` helper used by every component)
+- Add `@import "@nyra/tailwind-preset";` to your `app/globals.css`, right after the Tailwind import
+- Offer to install: `motion`, `clsx`, `tailwind-merge`, `lucide-react`, `@nyra/tailwind-preset`
 
-Then pick components from the [catalog](/components) and pull them in:
+### 2. Add components
 
 ```bash
 pnpm dlx nyra@latest add magnetic-button aurora-background tilt-card
 ```
 
-Each component lands in `components/ui/<category>/<name>.tsx` and the CLI prompts to install any missing deps.
+Each slug lands in `components/ui/<category>/<name>.tsx`. The CLI aggregates dependency requirements across every component you're adding and prompts once.
+
+### 3. Use the component
+
+```tsx
+import { MagneticButton } from "@/components/ui/button/magnetic-button";
+
+export default function Page() {
+  return <MagneticButton>Hover me</MagneticButton>;
+}
+```
+
+That's the whole loop. Repeat step 2 every time you want a new component.
 
 ### Pro components
+
+If you have a Pro license, save the key once:
 
 ```bash
 pnpm dlx nyra@latest login --key NYRA-XXXX-XXXX-XXXX
 pnpm dlx nyra@latest add floating-dock
 ```
 
-`login` saves your key to `~/.nyra/credentials` (file mode `0600`). Subsequent `add` calls send it as `Authorization: License NYRA-…`; the registry validates against the active license table before returning source.
+The key is stored in `~/.nyra/credentials` (`0600` mode). The registry validates it before returning Pro source. See [CLI · login](/docs/cli) for the full flow.
 
-## Manual install
+## Path B — Manual
 
 If you'd rather not run a CLI, the setup is five small steps.
 
@@ -56,6 +103,8 @@ cd my-app
 pnpm add motion clsx tailwind-merge lucide-react
 pnpm add -D @nyra/tailwind-preset
 ```
+
+Replace `pnpm` with `npm` / `yarn` / `bun` if needed — the dep names don't change.
 
 <Callout type="info" title="Per-component dependencies">
   Each component's detail page lists exactly which packages it needs. Pages without animation often have **zero** extra deps beyond the shared `cn()` helper.
@@ -87,7 +136,7 @@ That gives you every Nyra design token (`--background`, `--accent`, `--border`, 
 
 ### 5. Copy a component
 
-Open the [catalog](/components), pick a component, copy its source into `components/ui/<category>/<name>.tsx`, and use it like any other React component:
+Open the [catalog](/components), pick a component, and copy its source into `components/ui/<category>/<name>.tsx`. Then import and use:
 
 ```tsx
 import { MagneticButton } from "@/components/ui/button/magnetic-button";
@@ -97,4 +146,44 @@ export default function Page() {
 }
 ```
 
-You now own the source — edit freely, or leave it alone for the next update.
+You now own the source — edit freely.
+
+## Project layout
+
+After your first `add`, your project will look like this (paths matter for the default Next.js path alias `@/*`):
+
+```
+my-app/
+├── app/
+│   ├── globals.css           # has @import "@nyra/tailwind-preset"
+│   └── page.tsx
+├── components/
+│   └── ui/
+│       ├── button/
+│       │   └── magnetic-button.tsx
+│       ├── background/
+│       │   └── aurora-background.tsx
+│       └── card/
+│           └── tilt-card.tsx
+├── lib/
+│   └── utils.ts              # cn() helper
+└── package.json
+```
+
+If your project uses Next.js's `src/` directory, every path above moves under `src/` — the CLI detects this automatically.
+
+## Updating
+
+There's no `nyra` package to upgrade — components are source files in your repo. To pick up an updated version of a component, re-run `add` with `--force`:
+
+```bash
+pnpm dlx nyra@latest add magnetic-button --force
+```
+
+This overwrites the file. Diff first if you've customised it.
+
+## Next
+
+- [CLI](/docs/cli) — every command, flag, and env var.
+- [Theming](/docs/theming) — override the design tokens to rebrand the library.
+- [Components](/docs/components-overview) — a map of the catalog by category.

@@ -1,0 +1,70 @@
+import { SiteNav } from "@/components/site/site-nav";
+import { SiteFooter } from "@/components/site/site-footer";
+
+export const metadata = {
+  title: "Privacy Policy",
+  description:
+    "How Nyra collects, uses, and protects your data. Plain language, no tracking we don't tell you about.",
+};
+
+export default function Page({ children }) {
+  return (
+    <div className="min-h-dvh">
+      <SiteNav />
+      <main className="mx-auto max-w-3xl px-6 py-16 sm:px-10 sm:py-24">
+        {children}
+      </main>
+      <SiteFooter />
+    </div>
+  );
+}
+
+# Privacy Policy
+
+_Last updated: May 15, 2026_
+
+This is the short, honest version. Nyra is a small product — we collect the
+minimum we need to run the service and we don't sell or rent your data.
+
+## What we collect
+
+- **Account information** — your email address, name (if you provide one),
+  and the authentication identifier issued by our identity provider
+  (Clerk). We never see or store your password.
+- **Billing information** — purchase records and subscription state from
+  Lemon Squeezy. Card details never reach our servers; Lemon Squeezy is
+  the merchant of record and handles all payment data.
+- **Usage analytics** — aggregate page-view counts via Plausible. No
+  cookies, no fingerprinting, no individual user tracking. The dashboard
+  shows numbers like "2,419 pageviews on /components this week," not
+  "user X visited Y."
+- **Error reports** — runtime errors are sent to Sentry to help us fix
+  bugs. We strip PII before transmission.
+
+## What we don't collect
+
+- We do not use third-party advertising cookies.
+- We do not track you across the web.
+- We do not sell, rent, or share your personal data with marketers.
+
+## Cookies
+
+Nyra sets a small number of first-party cookies needed to keep you signed
+in and to remember your theme preference. We do not use analytics cookies.
+
+## Your rights
+
+Email <a href="mailto:hello@nyra.dev">hello@nyra.dev</a> to export your
+data, correct any field, or close your account. We respond within seven
+business days.
+
+## Children
+
+Nyra is not directed at children under thirteen. We do not knowingly
+collect data from anyone under that age.
+
+## Contact
+
+For privacy questions: <a href="mailto:hello@nyra.dev">hello@nyra.dev</a>.
+
+For everything else: the [Discord](https://discord.gg/nyra) is faster.

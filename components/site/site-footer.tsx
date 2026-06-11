@@ -1,6 +1,7 @@
 import Link from "next/link";
 
 import { NyraMark } from "@/components/icons/nyra-mark";
+import { NewsletterForm } from "@/components/site/newsletter-form";
 import { cn } from "@/lib/utils";
 
 const columns: { title: string; links: { href: string; label: string }[] }[] = [
@@ -33,10 +34,15 @@ const columns: { title: string; links: { href: string; label: string }[] }[] = [
   },
 ];
 
+const legalLinks: { href: string; label: string }[] = [
+  { href: "/privacy", label: "Privacy" },
+  { href: "/terms", label: "Terms" },
+];
+
 export function SiteFooter({ className }: { className?: string }) {
   return (
     <footer className={cn("border-t border-border", className)}>
-      <div className="mx-auto grid max-w-6xl gap-10 px-6 py-14 sm:grid-cols-2 sm:px-10 md:grid-cols-4">
+      <div className="mx-auto grid max-w-6xl gap-12 px-6 py-14 sm:px-10 md:grid-cols-[1.4fr_1fr_1fr_1fr]">
         <div className="flex flex-col gap-4">
           <Link href="/" className="flex items-center gap-2">
             <NyraMark size={16} className="text-accent" />
@@ -44,9 +50,11 @@ export function SiteFooter({ className }: { className?: string }) {
               nyra
             </span>
           </Link>
-          <p className="max-w-xs text-xs text-foreground-muted">
-            Components for interfaces that feel alive.
+          <p className="max-w-sm text-sm text-foreground-muted">
+            New components every week. Drop your email — we send a short note
+            when something ships.
           </p>
+          <NewsletterForm className="mt-1" />
         </div>
 
         {columns.map((col) => (
@@ -70,8 +78,19 @@ export function SiteFooter({ className }: { className?: string }) {
         ))}
       </div>
 
-      <div className="mx-auto flex max-w-6xl items-center justify-between border-t border-border px-6 py-5 text-[11px] text-foreground-muted sm:px-10">
-        <span>© {new Date().getFullYear()} Nyra. All rights reserved.</span>
+      <div className="mx-auto flex max-w-6xl flex-col items-start justify-between gap-3 border-t border-border px-6 py-5 text-[11px] text-foreground-muted sm:px-10 md:flex-row md:items-center">
+        <div className="flex items-center gap-3">
+          <span>© {new Date().getFullYear()} Nyra. All rights reserved.</span>
+          {legalLinks.map((l) => (
+            <Link
+              key={l.href}
+              href={l.href}
+              className="transition-colors hover:text-foreground"
+            >
+              {l.label}
+            </Link>
+          ))}
+        </div>
         <span className="font-mono">v0.0.1</span>
       </div>
     </footer>
