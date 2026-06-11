@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "motion/react";
 
 import { cn } from "@/lib/utils";
@@ -12,13 +12,28 @@ type SparklesProps = {
   colorClassName?: string;
 };
 
+type Sparkle = {
+  id: number;
+  left: number;
+  top: number;
+  size: number;
+  delay: number;
+  duration: number;
+  repeatDelay: number;
+};
+
 export function Sparkles({
   count = 28,
   className,
   colorClassName = "text-accent",
 }: SparklesProps) {
-  const sparkles = useMemo(
-    () =>
+  // Generate sparkle positions after mount so server-rendered HTML (empty)
+  // matches the client's first paint — then fill in real positions. Avoids
+  // a Math.random()-driven hydration mismatch.
+  const [sparkles, setSparkles] = useState<Sparkle[]>([]);
+
+  useEffect(() => {
+    setSparkles(
       Array.from({ length: count }, (_, i) => ({
         id: i,
         left: Math.random() * 100,
@@ -26,9 +41,10 @@ export function Sparkles({
         size: 4 + Math.random() * 12,
         delay: Math.random() * 4,
         duration: 1.6 + Math.random() * 2.4,
+        repeatDelay: Math.random() * 2,
       })),
-    [count],
-  );
+    );
+  }, [count]);
 
   return (
     <div
@@ -57,7 +73,7 @@ export function Sparkles({
             duration: s.duration,
             delay: s.delay,
             repeat: Infinity,
-            repeatDelay: Math.random() * 2,
+            repeatDelay: s.repeatDelay,
             ease: "easeInOut",
           }}
         >

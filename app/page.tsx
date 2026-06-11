@@ -277,8 +277,8 @@ function Testimonials() {
       </div>
 
       <div className="mt-12 grid grid-cols-1 gap-6 md:grid-cols-3">
-        {TESTIMONIALS.map((t) => (
-          <TiltCard key={t.name} max={6} depth={20}>
+        {TESTIMONIALS.map((t, i) => (
+          <TiltCard key={i} max={6} depth={20}>
             <figure className="flex h-full flex-col justify-between gap-6 rounded-2xl border border-border bg-surface p-6">
               <blockquote className="font-serif text-xl leading-snug">
                 "{t.quote}"
@@ -303,9 +303,9 @@ function TrustedBy() {
           On the wait list
         </span>
         <Marquee speed={32} className="w-full">
-          {TRUSTED_BY.map((name) => (
+          {TRUSTED_BY.map((name, i) => (
             <span
-              key={name}
+              key={i}
               className="whitespace-nowrap font-serif text-3xl italic text-foreground-muted"
             >
               {name}
