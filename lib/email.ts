@@ -4,7 +4,6 @@
  * `RESEND_API_KEY` is missing; the route handlers degrade gracefully.
  */
 
-import "server-only";
 import { env, isResendConfigured } from "@/lib/env";
 
 const API_BASE = "https://api.resend.com";
