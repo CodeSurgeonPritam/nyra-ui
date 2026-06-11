@@ -900,6 +900,102 @@ export const registry: NyraComponent[] = [
     dependencies: [],
     createdAt: "2026-05-15",
   },
+  {
+    slug: "input",
+    name: "Input",
+    description:
+      "Single-line text input with a floating label, focus glow, and leading / trailing slots.",
+    category: "form",
+    tags: ["form", "animated", "a11y"],
+    pro: false,
+    files: ["form/input.tsx"],
+    dependencies: ["motion"],
+    createdAt: "2026-05-15",
+  },
+  {
+    slug: "otp-input",
+    name: "OTP Input",
+    description:
+      "Multi-cell one-time-password input. Auto-advance, backspace step-back, paste-fill.",
+    category: "form",
+    tags: ["form", "auth", "animated"],
+    pro: false,
+    files: ["form/otp-input.tsx"],
+    dependencies: ["motion"],
+    createdAt: "2026-05-15",
+  },
+  {
+    slug: "switch",
+    name: "Switch",
+    description:
+      "Animated on/off toggle. Spring-driven thumb, accent track when active.",
+    category: "form",
+    tags: ["form", "animated", "a11y"],
+    pro: false,
+    files: ["form/switch.tsx"],
+    dependencies: ["motion"],
+    createdAt: "2026-05-15",
+  },
+  {
+    slug: "checkbox",
+    name: "Checkbox",
+    description:
+      "Checkbox with an animated stroke-drawn check tick. Keyboard-accessible.",
+    category: "form",
+    tags: ["form", "animated", "a11y"],
+    pro: false,
+    files: ["form/checkbox.tsx"],
+    dependencies: ["motion"],
+    createdAt: "2026-05-15",
+  },
+  {
+    slug: "radio-group",
+    name: "Radio Group",
+    description:
+      "Segmented control or vertical-tile radio group with a sliding accent indicator.",
+    category: "form",
+    tags: ["form", "animated", "a11y"],
+    pro: false,
+    files: ["form/radio-group.tsx"],
+    dependencies: ["motion"],
+    createdAt: "2026-05-15",
+  },
+  {
+    slug: "slider",
+    name: "Slider",
+    description:
+      "Range slider with a spring-driven thumb, click-to-jump track, and a value bubble on drag.",
+    category: "form",
+    tags: ["form", "animated", "a11y"],
+    pro: false,
+    files: ["form/slider.tsx"],
+    dependencies: ["motion"],
+    createdAt: "2026-05-15",
+  },
+  {
+    slug: "password-input",
+    name: "Password Input",
+    description:
+      "Password field with a reveal toggle and a live strength meter (weak → strong).",
+    category: "form",
+    tags: ["form", "auth", "animated"],
+    pro: true,
+    files: ["form/password-input.tsx"],
+    dependencies: ["motion"],
+    createdAt: "2026-05-15",
+  },
+  {
+    slug: "tag-input",
+    name: "Tag Input",
+    description:
+      "Multi-value chip input — type, press Enter to commit; backspace removes; paste splits on commas.",
+    category: "form",
+    tags: ["form", "animated", "interactive"],
+    pro: true,
+    files: ["form/tag-input.tsx"],
+    dependencies: ["motion"],
+    createdAt: "2026-05-15",
+  },
 ];
 
 export function adjacentEntries(slug: string) {

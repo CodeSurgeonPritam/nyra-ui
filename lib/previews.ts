@@ -168,6 +168,16 @@ export const previews: Record<string, PreviewLoader> = {
   "highlight-text": dynamic(
     () => import("@/components/previews/highlight-text"),
   ),
+  input: dynamic(() => import("@/components/previews/input")),
+  "otp-input": dynamic(() => import("@/components/previews/otp-input")),
+  switch: dynamic(() => import("@/components/previews/switch")),
+  checkbox: dynamic(() => import("@/components/previews/checkbox")),
+  "radio-group": dynamic(() => import("@/components/previews/radio-group")),
+  slider: dynamic(() => import("@/components/previews/slider")),
+  "password-input": dynamic(
+    () => import("@/components/previews/password-input"),
+  ),
+  "tag-input": dynamic(() => import("@/components/previews/tag-input")),
 };
 
 export function getPreview(slug: string): PreviewLoader | undefined {
